@@ -259,7 +259,8 @@ function getUrls(contentToMatch) {
 
 async function extractMeta(
     textContent = '',
-    options = { fallbackOnHTMLTags: true }
+    options = { fallbackOnHTMLTags: true },
+    forceGoogle = false
 ) {
     try {
         const urls = getUrls(textContent);
@@ -279,7 +280,7 @@ async function extractMeta(
                 );
             } else { /* eslint-disable no-loop-func */
                 metaData.push(
-                    await fetchHtml(urls[i])
+                    await fetchHtml(urls[i], forceGoogle)
                         .then((html) => ({
                             ...html ? parseMeta(html, urls[i], options) : {},
                             url: urls[i],
