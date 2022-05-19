@@ -189,7 +189,10 @@ async function fetchHtml(urlToFetch, forceGoogle = false) {
             throw result;
         }
 
-        return result.text().then((resultParsed) => resultParsed);
+        return result.text().then((resultParsed) => ({
+            redirectedUrl: result.url,
+            resultParsed,
+        }));
     } catch (responseOrError) {
         if (responseOrError.message && __DEV__) {
             if (responseOrError.message === 'Network request failed') {
@@ -281,9 +284,10 @@ async function extractMeta(
             } else { /* eslint-disable no-loop-func */
                 metaData.push(
                     await fetchHtml(urls[i], forceGoogle)
-                        .then((html) => ({
-                            ...html ? parseMeta(html, urls[i], options) : {},
+                        .then(({ resultParsed, redirectedUrl }) => ({
+                            ...resultParsed ? parseMeta(resultParsed, urls[i], options) : {},
                             url: urls[i],
+                            redirectedUrl,
                         }))
                 );
             }
