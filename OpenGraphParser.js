@@ -183,6 +183,7 @@ async function fetchHtml(urlToFetch, forceGoogle = false) {
             headers: {
                 'user-agent': userAgent,
             },
+            credentials: 'include',
         });
 
         if (result.status >= 400) {
@@ -217,7 +218,7 @@ async function fetchHtml(urlToFetch, forceGoogle = false) {
 
 async function fetchJSON(urlToFetch, urlOfVideo) {
     try {
-        const result = await fetch(urlToFetch, { method: 'GET' });
+        const result = await fetch(urlToFetch, { method: 'GET', credentials: 'include' });
 
         if (result.status >= 400) {
             throw result;
