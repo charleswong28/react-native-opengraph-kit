@@ -174,7 +174,7 @@ async function fetchHtml(urlToFetch, forceGoogle = false) {
 
     if (forceGoogle) {
         userAgent
-            = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+            = 'Mediapartners-Google';
     }
 
     try {
